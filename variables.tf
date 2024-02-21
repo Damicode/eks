@@ -15,7 +15,7 @@ variable "EKS" {
 }
 
 variable "S3" {
-  default = "eks-cluster-bucket"
+  default = "eks-cluster-bucket-damier"
 }
 
 variable "terraform" {
