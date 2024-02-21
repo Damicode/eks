@@ -69,9 +69,6 @@ resource "aws_security_group" "webSg" {
   }
 }
 
-resource "aws_s3_bucket" "s3_bucket" {
-  bucket = var.S3 # change this name at variable.tf file
-}
 
 resource "aws_instance" "server" {
   ami                    = var.images
@@ -131,6 +128,9 @@ resource "aws_instance" "server3" {
   tags = {
     Name = var.Ansible
   }
+}
+resource "aws_s3_bucket" "s3_bucket" {
+  bucket = var.S3 # change this name at variable.tf file
 }
 
 resource "aws_dynamodb_table" "terraform_lock" {
