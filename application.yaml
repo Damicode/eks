@@ -13,7 +13,7 @@ spec:
      
 
    destination:
-     server:
+     server: 'https://kubernetes.default.svc'
      namespace: damier-app
 
 
@@ -22,5 +22,5 @@ spec:
      - CreateNamespace=true
      automated:
        prune: true
-       self-heal: true
+       selfHeal: true
 
