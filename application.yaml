@@ -1,0 +1,26 @@
+apiVersions:
+kind: Application
+metadata:
+  name: Damier_argocd
+  namespace: damier-app
+spec:
+   project: default
+
+   sources:
+     repoUrl: 'https://github.com/Damicode/eks.git'
+     path: dev
+     targetRevision: HEAD
+     
+
+   destination:
+     server:
+     namespace: damier-app
+
+
+   syncPolicy:
+     syncOptions:
+     - CreateNamespace=true
+     automated:
+       prune: true
+       self-heal: true
+
