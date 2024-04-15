@@ -19,13 +19,31 @@ eksctl version
 
 #tar the file
 
-tar -xvf eksctl_Linux_arm64.tar.gz -C /tmp && rm  -rf eksctl_Linux_arm64.tar.gz
-sudo mv /tmp/eksctl /usr/local/bin
+#tar -xvf eksctl_Linux_arm64.tar.gz -C /tmp && rm  -rf eksctl_Linux_arm64.tar.gz
+#sudo mv /tmp/eksctl /usr/local/bin
+
+# Check Permissions policies (9)
+AdministratorAccess
+AmazonDynamoDBFullAccess	
+AmazonEC2FullAccess	
+AmazonEKSClusterPolicy	
+AmazonEKSFargatePodExecutionRolePolicy	
+AmazonS3FullAccess	
+AmazonVPCFullAccess	
+AWSCloudFormationFullAccess	
+IAMUserChangePassword
 
 ------------------- CLUSTER ------------------------------
 
 #To check the current user on AWS
 aws sts get-caller-identity
+
+#Configure aws
+aws configure
+
+# chek at the  CloudFormation if stack of the cluster is not already created
+eksctl-<MY-CLUSTER-NAME>-cluster
+eksctl-damier-cluster-cluster
 
 #create Cluster
 eksctl create cluster --name damier-cluster --region region-code
@@ -155,7 +173,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n fr
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=us-east-1 \
-  --set vpcId=vpc-0df3e41a7b1387d15
+  --set vpcId=vpc-00653a9d68e234705
 
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \            
   -n kube-system \
@@ -167,7 +185,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
 
 
 #Verify that the deployments are running.
-kubectl get deployment -n kube-system aws-load-balancer-controller  
+kubectl get deployment -n frontend-app aws-load-balancer-controller  
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
