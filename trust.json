@@ -1,4 +1,4 @@
-read -r -d '' TRUST_RELATIONSHIP <<EOF
+
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -16,6 +16,5 @@ read -r -d '' TRUST_RELATIONSHIP <<EOF
     }
   ]
 }
-EOF
 
-echo "${TRUST_RELATIONSHIP}" > trust.json && cat trust.json
+
