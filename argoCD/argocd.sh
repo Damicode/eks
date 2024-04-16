@@ -10,8 +10,7 @@ oidc_id=$(aws eks describe-cluster --name $cluster_name --query "cluster.identit
 
 #print ID
 echo $oidc_id
-OIDC= 70AEABDE6BBB88717DFA0E778EB8AA35
-ID= 958472341617
+[]
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
 OIDC_PROVIDER=$(aws eks describe-cluster --name management --query "cluster.identity.oidc.issuer" --output text | sed -e "s/^https:\/\///")
 ++++++++++++++++++++++++++++++
@@ -74,7 +73,9 @@ aws eks get-token --cluster-name=damier-cluster
 
 ARGOCD_PASSWORD=$(kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f 2)
 echo $ARGOCD_PASSWORD
-
+argocd-server-7cbbdb87d7-8l6q7
+rgocd-server-7cbbdb87d7-f8fsz
+argocd-server-7cbbdb87d7-q4t4r
 # Open up an extra terminal
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 
