@@ -74,7 +74,7 @@ resource "aws_route_table_association" "damier_table_ra" {
 resource "aws_eip" "damier_eip" {
   domain = "vpc"
 
-  instance                  = aws_instance.damier_instance.id
+  instance                  = aws_instance.damier_web_instance.id
   associate_with_private_ip = aws_subnet.private_sub.id
   depends_on                = [aws_internet_gateway.damier_igw]
 }
