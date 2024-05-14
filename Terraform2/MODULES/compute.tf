@@ -14,17 +14,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-#Create Key Pairs
-# resource "aws_key_pair" "deployer" {
-#   key_name   = "damier_newkey_pair"
-#   public_key = file("~/.ssh/id_rsa.pub")
-# }
 
+#Create Key Pairs
 resource "tls_private_key" "pk" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
-
  resource "aws_key_pair" "deployer" {
    key_name   = "damier_newkey_pair"
    public_key = tls_private_key.pk.public_key_openssh
@@ -64,6 +59,6 @@ output "data_image1" {
 
 output "ata_image2" {
   description = "Get All image available"
-  value       = "List of Images :${data.aws_ami.ubuntu.id}/" 
+  value       = ["List of Images :${data.aws_ami.ubuntu.id}"] 
   
 }

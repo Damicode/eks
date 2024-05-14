@@ -3,7 +3,7 @@
 
 #1 Create VPC
 resource "aws_vpc" "damier_vpc" {
-  cidr_block       = "10.100.0.0/16"
+  cidr_block       = "10.0.0.0/16"
 #   instance_tenancy = "default"
 
   tags = {
@@ -14,7 +14,7 @@ resource "aws_vpc" "damier_vpc" {
 #2 Create Public Subnets
 resource "aws_subnet" "public_sub" {
   vpc_id     = aws_vpc.damier_vpc.id
-  cidr_block = "10.100.1.0/24"
+  cidr_block = "10.0.0.0/24"
   availability_zone = "us-east-1a" 
 
   tags = {
@@ -25,7 +25,7 @@ resource "aws_subnet" "public_sub" {
 #3 Create Private Subnets
 resource "aws_subnet" "private_sub" {
   vpc_id     = aws_vpc.damier_vpc.id
-  cidr_block = "10.100.2.0/24"
+  cidr_block = "10.0.128.0/20"
 availability_zone = "us-east-1b" 
   tags = {
     Name = "private_sub"
@@ -47,11 +47,12 @@ resource "aws_route_table" "damier_route_table" {
 
   # since this is exactly the route AWS will create, the route will be adopted
   route {
-    cidr_block = aws_subnet.public_sub.cidr_block
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.damier_igw.id
   }
 
- 
+  
+
   tags = {
 
     Name = "damier_route_table"
@@ -68,10 +69,8 @@ resource "aws_route_table_association" "damier_table_ra" {
 
 # 6 Create Eip  FOR Database Connectivity
 resource "aws_eip" "damier_eip" {
-  domain = "vpc"
-
-  instance                  = aws_instance.damier_web_instance.id
-  associate_with_private_ip = aws_subnet.private_sub.id
+  #domain = "vpc"
+  vpc = true
   depends_on                = [aws_internet_gateway.damier_igw]
 }
 
