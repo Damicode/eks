@@ -192,3 +192,6 @@ kubectl get deployment -n frontend-app aws-load-balancer-controller
 helm delete aws-load-balancer-controller  -n frontend-app
 helm delete aws-load-balancer-controller -n kube-system
 
+
+aws s3api delete-bucket --bucket my-bucket --region us-east-1
+

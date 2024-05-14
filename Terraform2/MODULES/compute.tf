@@ -15,10 +15,20 @@ data "aws_ami" "ubuntu" {
 }
 
 #Create Key Pairs
-resource "aws_key_pair" "deployer" {
-  key_name   = "damier_newkey_pair"
-  public_key = file("~/.ssh/id_rsa.pub")
+# resource "aws_key_pair" "deployer" {
+#   key_name   = "damier_newkey_pair"
+#   public_key = file("~/.ssh/id_rsa.pub")
+# }
+
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
+
+ resource "aws_key_pair" "deployer" {
+   key_name   = "damier_newkey_pair"
+   public_key = tls_private_key.pk.public_key_openssh
+ }
 
 # Create Instance
 resource "aws_instance" "damier_web_instance" {
@@ -48,7 +58,7 @@ resource "aws_dynamodb_table" "terraform_lock" {
 
 output "data_image1" {
   description = "Get All image available"
-  value       = "List of Images :${data.aws_ami.ubuntu}/" 
+  value       = ["List of Images :${data.aws_ami.ubuntu.image_id}"]
   
 }
 

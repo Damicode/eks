@@ -47,15 +47,11 @@ resource "aws_route_table" "damier_route_table" {
 
   # since this is exactly the route AWS will create, the route will be adopted
   route {
-    cidr_block = aws_vpc.damier_vpc.cidr_block
+    cidr_block = aws_subnet.public_sub.cidr_block
     gateway_id = aws_internet_gateway.damier_igw.id
   }
 
-   route {
-    ipv6_cidr_block        = "::/0"
-    egress_only_gateway_id = aws_egress_only_internet_gateway.gw.id
-  }
-
+ 
   tags = {
 
     Name = "damier_route_table"
