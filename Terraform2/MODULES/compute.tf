@@ -21,21 +21,21 @@ resource "tls_private_key" "pk" {
   rsa_bits  = 4096
 }
  resource "aws_key_pair" "deployer" {
-   key_name   = "damier_newkey_pair"
+   key_name   = var.key_name_tag
    public_key = tls_private_key.pk.public_key_openssh
  }
 
 # Create Instance
 resource "aws_instance" "damier_web_instance" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   key_name        = aws_key_pair.deployer.key_name
 
 vpc_security_group_ids = [aws_security_group.damier_allow_tls.id]
 subnet_id = aws_subnet.public_sub.id
 
   tags = {
-    Name = "damier_web_instance1"
+    Name = var.aws_instance_tag
   }
 }
 

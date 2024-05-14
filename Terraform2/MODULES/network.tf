@@ -3,7 +3,7 @@
 
 #1 Create VPC
 resource "aws_vpc" "damier_vpc" {
-  cidr_block       = "10.0.0.0/16"
+  cidr_block       = var.vpc_cidr
 #   instance_tenancy = "default"
 
   tags = {
@@ -14,7 +14,7 @@ resource "aws_vpc" "damier_vpc" {
 #2 Create Public Subnets
 resource "aws_subnet" "public_sub" {
   vpc_id     = aws_vpc.damier_vpc.id
-  cidr_block = "10.0.0.0/24"
+  cidr_block = var.pub_sub
   availability_zone = "us-east-1a" 
 
   tags = {
@@ -25,7 +25,7 @@ resource "aws_subnet" "public_sub" {
 #3 Create Private Subnets
 resource "aws_subnet" "private_sub" {
   vpc_id     = aws_vpc.damier_vpc.id
-  cidr_block = "10.0.128.0/20"
+  cidr_block = var.private_sub
 availability_zone = "us-east-1b" 
   tags = {
     Name = "private_sub"
